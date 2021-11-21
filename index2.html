@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Innocent Deaths Caused By Police Data Visualization</title>
+</head>
+
+<body>
+
+  <svg id="svg" width="600" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  <script>
+    createZoomableMap()
+
+    async function createZoomableMap() {
+      const width = 1200;
+      const height = 710;
+
+      const zoom = d3.zoom()
+        .scaleExtent([0.9, 50])
+        .on("zoom", zoomed);
+
+      const svg = d3.select('#svg')
+        .attr("viewBox", [0, 0, width, height])
+        .on("click", reset);
+
+      const g = svg.append("g");
+
+      // start custom code 
+
+      const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+
+      const deathsLonExtent = d3.extent([-124.741409, -67.422941])
+      const xscale = d3.scaleLinear()
+        .domain(deathsLonExtent)
+        .range([0, width])
+
+      const deathsLatExtent = d3.extent([25, 48])
+      const yscale = d3.scaleLinear()
+        .domain(deathsLatExtent)
+        .range([height, 0])
+
+      const deaths = g.append('g')
+        .selectAll('ellipse')
+        .data(deathData)
+        .enter()
+        // add the circles
+        .append('ellipse')
+        .attr('cx', d => xscale(d["Longitude"]))
+        .attr('cy', d => yscale(d["Latitude"]))
+        .attr('rx', 3)
+        .attr('ry', 3)
+        .attr('fill', d => 'teal')
+        .attr('opacity', () => 0.1)
+
+      // end custom code
+
+      svg.call(zoom);
+
+      function reset() {
+        states.transition().style("fill", null);
+        svg.transition().duration(750).call(
+          zoom.transform,
+          d3.zoomIdentity,
+          d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
+        );
+      }
+
+      function zoomed(event) {
+        const { transform } = event;
+        g.attr("transform", transform);
+        g.attr("stroke-width", 1 / transform.k);
+      }
+    }
+  </script>
+</body>
+
+<style>
+  /* Put the box in the center of the page */
+  body,
+  html {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #svg {
+    border: 1px solid;
+  }
+</style>
+
+</html>
