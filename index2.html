@@ -6,8 +6,10 @@
 </head>
 
 <body>
-
-  <svg id="svg" width="600" height="600"></svg>
+  <div class="pageContainer">
+    <svg id="svg" width="600" height="600"></svg>
+    <div id="person-display"></div>
+  </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3"></script>
@@ -54,13 +56,27 @@
         .attr('ry', 3)
         .attr('fill', d => 'teal')
         .attr('opacity', () => 0.1)
+        .on("mouseover", function (e) {
+          const { Name, Age, Gender, Race } = e.target.__data__
+          const DateOfDeath = e.target.__data__[" Date of injury resulting in death (month/day/year)"]
+          const data = { Name, Age, Gender, Race, DateOfDeath }
+
+          const personDisplay = document.getElementById('person-display')
+          personDisplay.replaceChildren()
+
+          personDisplay.innerHTML = data.Name
+          for (const [key, value] of Object.entries(data)) {
+            const p = document.createElement('p')
+            p.innerHTML = `${key}: ${value}`
+            personDisplay.appendChild(p)
+          }
+        })
 
       // end custom code
 
       svg.call(zoom);
 
       function reset() {
-        states.transition().style("fill", null);
         svg.transition().duration(750).call(
           zoom.transform,
           d3.zoomIdentity,
@@ -80,9 +96,10 @@
 <style>
   /* Put the box in the center of the page */
   body,
-  html {
+  .pageContainer {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
