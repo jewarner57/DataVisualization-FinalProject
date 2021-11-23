@@ -54,17 +54,17 @@
         .attr('cy', d => yscale(d["Latitude"]))
         .attr('rx', 3)
         .attr('ry', 3)
-        .attr('fill', d => 'teal')
-        .attr('opacity', () => 0.1)
+        .attr('fill', d => d["Gender"] === 'Male' ? '#4287f5' : 'red')
+        .attr('opacity', () => 0.2)
         .on("mouseover", function (e) {
           const { Name, Age, Gender, Race } = e.target.__data__
           const DateOfDeath = e.target.__data__[" Date of injury resulting in death (month/day/year)"]
+
           const data = { Name, Age, Gender, Race, DateOfDeath }
 
           const personDisplay = document.getElementById('person-display')
           personDisplay.replaceChildren()
 
-          personDisplay.innerHTML = data.Name
           for (const [key, value] of Object.entries(data)) {
             const p = document.createElement('p')
             p.innerHTML = `${key}: ${value}`
