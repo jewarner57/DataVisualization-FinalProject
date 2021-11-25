@@ -5,17 +5,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Deaths by force used</title>
 </head>
 
 <body>
   <svg id="svg" width="800" height="500"></svg>
+  <svg id="svg1" width="800" height="500"></svg>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
-    async function handleData() {
+    async function handleData(svgID, getData) {
       const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
-      const data = getKillingsByRace(deathData)
+      const data = getData(deathData)
 
       const width = 600
       const height = 600
@@ -36,7 +37,7 @@
 
       // Select the SVG
       const svg = d3
-        .select('#svg')
+        .select(`#${svgID}`)
 
       // Append a group (<g>) to hold the arcs 
       const pieGroup = svg
@@ -71,7 +72,7 @@
         .data(data)
         .enter()
         .append('text')
-        .text(d => `${d.race}: ${d.count}`)
+        .text(d => `${d.key}: ${d.count}`)
         .attr('x', 20)
         .attr('y', (d, i) => (i * 20) + 20)
     }
@@ -85,7 +86,7 @@
         // If there is no entry for this race yet
         if (!killingsByRace[race]) {
           // create one
-          killingsByRace[race] = { race: race, count: 0 }
+          killingsByRace[race] = { key: race, count: 0 }
         }
 
         killingsByRace[race].count += 1
@@ -94,7 +95,27 @@
       return Object.values(killingsByRace)
     }
 
-    handleData()
+    function getKillingsByForceUsed(data) {
+      const killingsByForce = {}
+      const forceKey = "Highest level of force"
+
+      for (person of data) {
+        const forceUsed = person[forceKey] || 'no data'
+
+        // If there is no entry for this race yet
+        if (!killingsByForce[forceUsed]) {
+          // create one
+          killingsByForce[forceUsed] = { key: forceUsed, count: 0 }
+        }
+
+        killingsByForce[forceUsed].count += 1
+      }
+
+      return Object.values(killingsByForce)
+    }
+
+    handleData("svg", getKillingsByRace)
+    handleData("svg1", getKillingsByForceUsed)
   </script>
 </body>
 
