@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <svg id="svg" width="600" height="600"></svg>
+  <svg id="svg" width="700" height="700"></svg>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
@@ -20,14 +20,13 @@
       const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
       const data = getKillingsByState(deathData)
 
-      const width = 600
-      const height = 600
-      // const margin = 40
+      const width = 700
+      const height = 700
 
       const sizeExtent = d3.extent([0, 5000])
       const sizeScale = d3.scaleLinear()
         .domain(sizeExtent)
-        .range([15, 130])
+        .range([18, 160])
 
       var circles = data.map((state) => {
         return {

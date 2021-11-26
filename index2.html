@@ -26,7 +26,6 @@
 
       const svg = d3.select('#svg')
         .attr("viewBox", [0, 0, width, height])
-        .on("click", reset);
 
       const g = svg.append("g");
 
@@ -75,14 +74,6 @@
       // end custom code
 
       svg.call(zoom);
-
-      function reset() {
-        svg.transition().duration(750).call(
-          zoom.transform,
-          d3.zoomIdentity,
-          d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
-        );
-      }
 
       function zoomed(event) {
         const { transform } = event;
