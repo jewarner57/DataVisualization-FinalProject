@@ -30,7 +30,6 @@
       const g = svg.append("g");
 
       // start custom code 
-
       const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
 
       const deathsLonExtent = d3.extent([-124.741409, -67.422941])
@@ -72,7 +71,6 @@
         })
 
       // end custom code
-
       svg.call(zoom);
 
       function zoomed(event) {

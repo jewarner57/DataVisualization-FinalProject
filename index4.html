@@ -97,7 +97,7 @@
       for (person of data) {
         const state = person['State']
 
-        // If there is no entry for this race yet
+        // If there is no entry for this state yet
         if (!killingsByState[state]) {
           // create one
           killingsByState[state] = { key: state, count: 0 }
