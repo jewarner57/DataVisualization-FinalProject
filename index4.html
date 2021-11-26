@@ -50,7 +50,9 @@
       const states = svg.append('g')
         .attr('transform', `translate(${width / 2},${height / 2})`)
 
+      // State circles
       states
+        .append('g')
         .selectAll('circle.node')
         .data(circles)
         .enter()
@@ -61,7 +63,9 @@
         .attr('r', d => d.r)
         .attr('fill', d => d.color)
 
+      // State abbreviation labels
       states
+        .append('g')
         .selectAll('text.node')
         .data(circles)
         .enter()
@@ -71,7 +75,21 @@
         .text(d => d.text)
         .attr('text-anchor', 'middle')
         .attr('x', d => d.x)
-        .attr('y', d => d.y + d.r / 3)
+        .attr('y', d => d.y + d.r / 5)
+
+      // State count labels
+      states
+        .append('g')
+        .selectAll('text.node')
+        .data(circles)
+        .enter()
+        .append('text')
+        .style('font-family', "'Roboto', sans-serif")
+        .style('font-size', d => d.r / 3)
+        .text(d => d.value)
+        .attr('text-anchor', 'middle')
+        .attr('x', d => d.x)
+        .attr('y', d => (d.y + d.r / 4) + d.r / 3)
     }
 
     function getKillingsByState(data) {
