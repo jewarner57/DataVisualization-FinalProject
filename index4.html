@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deaths by state</title>
+</head>
+
+<body>
+  <svg id="svg" width="600" height="600"></svg>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    async function handleData() {
+      const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+      const data = getKillingsByState(deathData)
+
+      const width = 600
+      const height = 600
+      // const margin = 40
+
+      const sizeExtent = d3.extent([0, 5000])
+      const sizeScale = d3.scaleLinear()
+        .domain(sizeExtent)
+        .range([15, 130])
+
+      var circles = data.map((state) => {
+        return {
+          r: sizeScale(state.count),
+          color: `hsl(${state.count % (Math.random() * 360)}, 50%, 50%)`,
+          text: state.key,
+          value: state.count
+        }
+      })
+
+      circles.sort((a, b) => b.r - a.r);
+
+      d3.packSiblings(circles);
+
+      // Select the SVG
+      const svg = d3
+        .select(`#svg`)
+        .style('border', '1px solid')
+
+      const states = svg.append('g')
+        .attr('transform', `translate(${width / 2},${height / 2})`)
+
+      states
+        .selectAll('circle.node')
+        .data(circles)
+        .enter()
+        .append('circle')
+        .classed('node', true)
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+        .attr('r', d => d.r)
+        .attr('fill', d => d.color)
+
+      states
+        .selectAll('text.node')
+        .data(circles)
+        .enter()
+        .append('text')
+        .style('font-family', "'Roboto', sans-serif")
+        .style('font-size', d => d.r)
+        .text(d => d.text)
+        .attr('text-anchor', 'middle')
+        .attr('x', d => d.x)
+        .attr('y', d => d.y + d.r / 3)
+    }
+
+    function getKillingsByState(data) {
+      killingsByState = {}
+
+      for (person of data) {
+        const state = person['State']
+
+        // If there is no entry for this race yet
+        if (!killingsByState[state]) {
+          // create one
+          killingsByState[state] = { key: state, count: 0 }
+        }
+
+        killingsByState[state].count += 1
+      }
+
+      return Object.values(killingsByState)
+    }
+
+    handleData()
+  </script>
+</body>
+
+</html>
