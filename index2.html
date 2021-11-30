@@ -8,8 +8,8 @@
 <body>
   <div class="pageContainer">
     <svg id="svg" width="600" height="600"></svg>
-    <div id="person-display"></div>
   </div>
+  <div id="person-display"></div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3"></script>
@@ -28,6 +28,8 @@
         .attr("viewBox", [0, 0, width, height])
 
       const g = svg.append("g");
+
+      let detailDisplayOpen = false
 
       // start custom code 
       const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
@@ -55,6 +57,7 @@
         .attr('fill', d => d["Gender"] === 'Male' ? '#4287f5' : 'red')
         .attr('opacity', () => 0.2)
         .on("mouseover", function (e) {
+          detailDisplayOpen = true
           const { Name, Age, Gender, Race } = e.target.__data__
           const DateOfDeath = e.target.__data__[" Date of injury resulting in death (month/day/year)"]
 
@@ -63,11 +66,26 @@
           const personDisplay = document.getElementById('person-display')
           personDisplay.replaceChildren()
 
+          personDisplay.style.left = `${e.clientX}px`
+          personDisplay.style.top = `${e.clientY}px`
+          personDisplay.style.display = 'block'
+
           for (const [key, value] of Object.entries(data)) {
             const p = document.createElement('p')
             p.innerHTML = `${key}: ${value}`
             personDisplay.appendChild(p)
           }
+        })
+        .on("mouseleave", function (e) {
+          detailDisplayOpen = false
+          const personDisplay = document.getElementById('person-display')
+
+          setTimeout(() => {
+            if (!detailDisplayOpen) {
+              personDisplay.style.display = 'none'
+              personDisplay.replaceChildren()
+            }
+          }, 50)
         })
 
       // end custom code
@@ -83,14 +101,25 @@
 </body>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
   /* Put the box in the center of the page */
-  body,
   .pageContainer {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  #person-display {
+    font-family: 'Roboto', sans-serif;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    position: absolute;
+    display: none;
   }
 
   #svg {

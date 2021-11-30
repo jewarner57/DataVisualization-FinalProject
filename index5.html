@@ -19,28 +19,29 @@
     async function handleData() {
       const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
 
-      const data = getKillingsByState(deathData)
+      const data = getKillingsByCity(deathData)
+
+      console.log(data)
 
       const width = 700
       const height = 700
 
       const sizeExtent = d3.extent(data, d => parseFloat(d.count))
-
       const sizeScale = d3.scaleLinear()
         .domain(sizeExtent)
-        .range([18, 160])
+        .range([30, 100])
 
       const colorExtent = d3.extent(data, d => parseFloat(d.count))
       const colorScale = d3.scaleLinear()
         .domain(colorExtent)
-        .range([211, 0])
+        .range([0, 100])
 
-      var circles = data.map((state) => {
+      var circles = data.map((city) => {
         return {
-          r: sizeScale(state.count),
-          color: `hsl(${colorScale(state.count)}, 50%, 50%)`,
-          text: state.key,
-          value: state.count
+          r: sizeScale(city.count),
+          color: `hsl(20, ${colorScale(city.count)}%, 50%)`,
+          text: city.key,
+          value: city.count
         }
       })
 
@@ -53,11 +54,11 @@
         .select(`#svg`)
         .style('border', '1px solid')
 
-      const states = svg.append('g')
+      const cities = svg.append('g')
         .attr('transform', `translate(${width / 2},${height / 2})`)
 
       // State circles
-      states
+      cities
         .append('g')
         .selectAll('circle.node')
         .data(circles)
@@ -69,22 +70,22 @@
         .attr('r', d => d.r)
         .attr('fill', d => d.color)
 
-      // State abbreviation labels
-      states
+      // city abbreviation labels
+      cities
         .append('g')
         .selectAll('text.node')
         .data(circles)
         .enter()
         .append('text')
         .style('font-family', "'Roboto', sans-serif")
-        .style('font-size', d => d.r)
+        .style('font-size', d => d.r / 3.2)
         .text(d => d.text)
         .attr('text-anchor', 'middle')
         .attr('x', d => d.x)
-        .attr('y', d => d.y + d.r / 5)
+        .attr('y', d => d.y)
 
-      // State count labels
-      states
+      // city count labels
+      cities
         .append('g')
         .selectAll('text.node')
         .data(circles)
@@ -98,22 +99,24 @@
         .attr('y', d => (d.y + d.r / 4) + d.r / 3)
     }
 
-    function getKillingsByState(data) {
-      killingsByState = {}
+    function getKillingsByCity(data) {
+      killingsByCity = {}
 
       for (person of data) {
-        const state = person['State']
+        const city = person['Location of death (city)']
 
         // If there is no entry for this state yet
-        if (!killingsByState[state]) {
+        if (!killingsByCity[city]) {
           // create one
-          killingsByState[state] = { key: state, count: 0 }
+          killingsByCity[city] = { key: city, count: 0 }
         }
 
-        killingsByState[state].count += 1
+        killingsByCity[city].count += 1
       }
 
-      return Object.values(killingsByState)
+      killingsByCity = Object.values(killingsByCity).sort((a, b) => a.val - b.val)
+
+      return killingsByCity.slice(0, 20)
     }
 
     handleData()
