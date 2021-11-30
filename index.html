@@ -84,7 +84,7 @@
       data.forEach(d => d[dateOfDeath] = parseTime(d[dateOfDeath]))
 
       // Find the extents of the years in the dates
-      const yearExtent = d3.extent(data, d => d[dateOfDeath].getFullYear())
+      let yearExtent = d3.extent(data, d => d[dateOfDeath].getFullYear())
 
       const yearlyDeaths = []
 
@@ -101,7 +101,7 @@
         yearlyDeaths[index].count += 1
       }
 
-      return yearlyDeaths
+      return yearlyDeaths.slice(0, yearlyDeaths.length - 1)
     }
   </script>
 </body>
