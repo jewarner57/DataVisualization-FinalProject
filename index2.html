@@ -120,6 +120,15 @@
         g.attr("transform", transform);
         g.attr("stroke-width", 1 / transform.k);
       }
+
+      // create the graph title
+      svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", -200)
+        .attr("text-anchor", "middle")
+        .style("font-size", "30px")
+        .style('font-family', "'Roboto', sans-serif")
+        .text("Innocent Deaths Caused by Police by Location")
     }
   </script>
 </body>

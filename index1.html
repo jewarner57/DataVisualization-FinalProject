@@ -11,17 +11,14 @@
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
-    d3.csv('./data/Innocent Deaths caused by Police (All time).csv')
-      .then(handleData)
+    async function handleData() {
 
-    function handleData(data) {
-
-      const yearlyDeaths = getYearlyCasualties(data)
+      const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+      const yearlyDeaths = getYearlyCasualties(deathData)
 
       const margin = 75
       const height = 600
       const width = 600
-
 
       const yearExtent = d3.extent(yearlyDeaths, d => d.year)
       const xscale = d3.scaleLinear()
@@ -72,6 +69,16 @@
         .append('g')
         .attr('transform', `translate(${margin}, 0)`)
         .call(leftAxis)
+
+      // create the graph title
+      svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 + (margin / 2))
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style('font-family', "'Roboto', sans-serif")
+        .text("Innocent Deaths Caused by Police by Location")
+        .text("Yearly Innocent Deaths Caused By Police");
     }
 
     function getYearlyCasualties(data) {
@@ -105,10 +112,14 @@
       // the data for the most recent year (2021) is incomplete
       return yearlyDeaths.slice(0, yearlyDeaths.length - 1)
     }
+
+    handleData()
   </script>
 </body>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
   /* Put the box in the center of the page */
   body,
   html {

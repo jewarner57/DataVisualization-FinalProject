@@ -39,7 +39,7 @@
       var circles = data.map((city) => {
         return {
           r: sizeScale(city.count),
-          color: `hsl(20, ${colorScale(city.count)}%, 50%)`,
+          color: `hsl(49, ${colorScale(city.count)}%, 50%)`,
           text: city.key,
           value: city.count
         }
@@ -52,7 +52,6 @@
       // Select the SVG
       const svg = d3
         .select(`#svg`)
-        .style('border', '1px solid')
 
       const cities = svg.append('g')
         .attr('transform', `translate(${width / 2},${height / 2})`)
@@ -96,7 +95,16 @@
         .text(d => d.value)
         .attr('text-anchor', 'middle')
         .attr('x', d => d.x)
-        .attr('y', d => (d.y + d.r / 4) + d.r / 3)
+        .attr('y', d => (d.y + d.r / 4) + d.r / 4)
+
+      // create the graph title
+      svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 45)
+        .attr("text-anchor", "middle")
+        .style("font-size", "20px")
+        .style('font-family', "'Roboto', sans-serif")
+        .text("Top 20 U.S. Cities Ranked by Most Innocents Killed By Police")
     }
 
     function getKillingsByCity(data) {

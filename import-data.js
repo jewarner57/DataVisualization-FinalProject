@@ -1,0 +1,1 @@
+const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
