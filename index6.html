@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deaths by force used</title>
+</head>
+
+<body>
+  <svg id="svg" width="800" height="500"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    async function handleData(svgID, getData) {
+      const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+      const data = getData(deathData)
+
+      // create a bar chart charting force used
+
+      // create a bar chart charting presence of mental illness
+
+    }
+
+    function getKillingsByForceUsed(data) {
+      const killingsByForce = {}
+      const forceKey = "Highest level of force"
+
+      for (person of data) {
+        const forceUsed = person[forceKey] || 'no data'
+
+        // If there is no entry for this race yet
+        if (!killingsByForce[forceUsed]) {
+          // create one
+          killingsByForce[forceUsed] = { key: forceUsed, count: 0 }
+        }
+
+        killingsByForce[forceUsed].count += 1
+      }
+
+      return Object.values(killingsByForce)
+    }
+
+    handleData("svg1", getKillingsByForceUsed)
+  </script>
+</body>
+
+</html>

@@ -54,7 +54,7 @@
         .attr('cy', d => yscale(d["Latitude"]))
         .attr('rx', 3)
         .attr('ry', 3)
-        .attr('fill', d => d["Gender"] === 'Male' ? '#4287f5' : 'red')
+        .attr('fill', d => d["Gender"] === 'Male' ? '#4287f5' : '#d62124')
         .attr('opacity', () => 0.2)
         .on("mouseover", function (e) {
           detailDisplayOpen = true
@@ -87,6 +87,30 @@
             }
           }, 50)
         })
+
+      const genderData = [{ color: '#4287f5', label: '= 1 Male', index: 0 }, { color: '#d62124', label: '= 1 Female', index: 1 }]
+      const key = svg.append('g')
+        .selectAll('circle')
+        .data(genderData)
+        .enter()
+        .append('circle')
+        .attr('cx', 40)
+        .attr('cy', d => -200 + (d.index * 50))
+        .attr('r', 20)
+        .attr('fill', d => d.color)
+        .attr('opacity', () => 0.2)
+
+      const keyLabel = svg.append('g')
+        .selectAll('text')
+        .data(genderData)
+        .enter()
+        .append('text')
+        .text(d => d.label)
+        .attr('font-size', '30px')
+        .attr('x', 70)
+        .attr('y', d => -192 + (d.index * 50))
+        .attr('fill', '#333')
+        .attr('opacity', () => 0.7)
 
       // end custom code
       svg.call(zoom);

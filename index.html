@@ -1,124 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Innocent Deaths Caused By Police Data Visualization</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unpacking Innocent Deaths Caused by Police</title>
 </head>
 
 <body>
 
-  <svg id="svg" width="600" height="600"></svg>
-
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script>
-    d3.csv('./data/Innocent Deaths caused by Police (All time).csv')
-      .then(handleData)
-
-    function handleData(data) {
-
-      const yearlyDeaths = getYearlyCasualties(data)
-
-      const margin = 75
-      const height = 600
-      const width = 600
-
-
-      const yearExtent = d3.extent(yearlyDeaths, d => d.year)
-      const xscale = d3.scaleLinear()
-        .domain(yearExtent)
-        .range([margin, height - margin])
-
-      const casualtyCount = d3.extent(yearlyDeaths, d => d.count)
-      const yscale = d3.scaleLinear()
-        .domain(casualtyCount)
-        .range([height - margin, margin])
-
-      // line generator
-      const linegen = d3.line()
-        .x(d => xscale(d.year)) // Use date here! 
-        .y(d => yscale(d.count))
-        .curve(d3.curveLinear)
-
-      // Select the svg
-      const svg = d3
-        .select('#svg')
-
-      // Make a group for the graph
-      const graph = svg
-        .append('g')
-
-      // Draw the graph
-      graph
-        .append('path')
-        .attr('d', linegen(yearlyDeaths))
-        .attr('stroke-width', 5)
-        .attr('stroke', 'tomato')
-        .attr('fill', 'none')
-
-      // Create the axis
-      const bottomAxis = d3.axisBottom(xscale).tickFormat(d3.format("d"))
-      const leftAxis = d3.axisLeft(yscale)
-
-      // Append a group and add the bottom axis 
-      svg
-        .append('g')
-        // Position the group
-        .attr('transform', `translate(0, ${height - margin})`)
-        // generate the axis in the group
-        .call(bottomAxis)
-
-      // Append the group and add the left axis
-      svg
-        .append('g')
-        .attr('transform', `translate(${margin}, 0)`)
-        .call(leftAxis)
-    }
-
-    function getYearlyCasualties(data) {
-      // save the death date column name
-      const dateOfDeath = " Date of injury resulting in death (month/day/year)"
-
-      // create parse format
-      const parseTime = d3.timeParse('%m/%d/%Y')
-      // parse the dates for d3
-      data.forEach(d => d[dateOfDeath] = parseTime(d[dateOfDeath]))
-
-      // Find the extents of the years in the dates
-      let yearExtent = d3.extent(data, d => d[dateOfDeath].getFullYear())
-
-      const yearlyDeaths = []
-
-      for (person of data) {
-        const deathYear = person[dateOfDeath].getFullYear()
-        const index = deathYear - yearExtent[0]
-
-        // If there is no entry for this year yet
-        if (!yearlyDeaths[index]) {
-          // create one
-          yearlyDeaths[index] = { year: deathYear, count: 0 }
-        }
-
-        yearlyDeaths[index].count += 1
-      }
-
-      return yearlyDeaths.slice(0, yearlyDeaths.length - 1)
-    }
-  </script>
 </body>
-
-<style>
-  /* Put the box in the center of the page */
-  body,
-  html {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #svg {
-    border: 1px solid;
-  }
-</style>
 
 </html>
