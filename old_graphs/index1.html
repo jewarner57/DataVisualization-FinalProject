@@ -13,7 +13,7 @@
   <script>
     async function handleData() {
 
-      const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+      const deathData = await d3.csv("../data/Innocent Deaths caused by Police (All time).csv")
       const yearlyDeaths = getYearlyCasualties(deathData)
 
       const margin = 75
@@ -78,7 +78,7 @@
         .style("font-size", "16px")
         .style('font-family', "'Roboto', sans-serif")
         .text("Innocent Deaths Caused by Police by Location")
-        .text("Yearly Innocent Deaths Caused By U.S. Police");
+        .text("Yearly Innocent Deaths Caused By U.S. Police")
     }
 
     function getYearlyCasualties(data) {
