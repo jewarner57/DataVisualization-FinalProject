@@ -10,12 +10,26 @@ svg {
   padding-bottom: 30px;
 }
 
-  #person-display {
-    font-family: 'Roboto', sans-serif;
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    position: absolute;
-    display: none;
-  }
+#person-display {
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: none;
+}
+
+.vis-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.vis-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}

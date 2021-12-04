@@ -36,8 +36,8 @@
     card.addEventListener("mousemove", (e) => {
       const { x, y } = card.getBoundingClientRect();
 
-      const xRotation = Number(card.offsetWidth - e.clientX).map(0, card.offsetWidth, 0, 80)
-      const yRotation = Number(card.offsetHeight - e.clientY).map(0, card.offsetHeight, 320, 420)
+      const xRotation = Number(card.offsetWidth - e.clientX).map(0, card.offsetWidth, 300, 360)
+      const yRotation = Number(card.offsetHeight - e.clientY).map(0, card.offsetHeight, 320, 400)
 
       card.style.setProperty("--x", `${xRotation}deg`);
       card.style.setProperty("--y", `-${yRotation}deg`);
@@ -62,8 +62,6 @@
       color: white;
       font-size: 20px;
       overflow: hidden;
-
-      /*   transform: rotateY(360deg) rotateX(360deg); */
     }
 
     .active {

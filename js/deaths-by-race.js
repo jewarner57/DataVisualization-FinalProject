@@ -59,6 +59,7 @@ async function handleRaceData(svgID, getData) {
     .text(d => `${d.key}: ${d.count}`)
     .attr('x', 20)
     .attr('y', (d, i) => (i * 20) + 20)
+    .style('font-family', 'Roboto, sans-serif')
 }
 
 function getKillingsByRace(data) {
@@ -76,7 +77,7 @@ function getKillingsByRace(data) {
     killingsByRace[race].count += 1
   }
 
-  return Object.values(killingsByRace)
+  return Object.values(killingsByRace).sort((a, b) => b.count - a.count)
 }
 
 function getKillingsByForceUsed(data) {
@@ -94,7 +95,6 @@ function getKillingsByForceUsed(data) {
 
     killingsByForce[forceUsed].count += 1
   }
-
   return Object.values(killingsByForce)
 }
 

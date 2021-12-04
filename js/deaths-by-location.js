@@ -38,7 +38,7 @@ async function createZoomableMap() {
     .attr('cy', d => yscale(d["Latitude"]))
     .attr('rx', 3)
     .attr('ry', 3)
-    .attr('fill', d => d["Gender"] === 'Male' ? '#4287f5' : '#d62124')
+    .attr('fill', d => d["Gender"] === 'Male' ? '#4287f5' : d["Gender"] === 'Female' ? '#d62124' : '#444')
     .attr('opacity', () => 0.2)
     .on("mouseover", function (e) {
       detailDisplayOpen = true
@@ -72,7 +72,11 @@ async function createZoomableMap() {
       }, 50)
     })
 
-  const genderData = [{ color: '#4287f5', label: '= 1 Male', index: 0 }, { color: '#d62124', label: '= 1 Female', index: 1 }]
+  const genderData = [
+    { color: '#4287f5', label: '= Male', index: 0 },
+    { color: '#d62124', label: '= Female', index: 1 },
+    { color: '#333', label: '= Unknown', index: 2 }
+  ]
   const key = svg.append('g')
     .selectAll('circle')
     .data(genderData)
