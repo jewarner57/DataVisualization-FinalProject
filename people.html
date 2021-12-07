@@ -6,16 +6,13 @@
 </head>
 
 <body>
-  <div class="loading-circle"></div>
-  <p id="loading-progress"></p>
-
   <div id="card-list">
   </div>
 </body>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
   let currentExtent = 0
-  const displayCount = 20
+  const displayCount = 30
   let deathData = {}
 
   async function handleData() {
@@ -34,7 +31,7 @@
   }
 
   window.onscroll = function (e) {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
       createCardsInRange(currentExtent, currentExtent > displayCount ? displayCount : currentExtent, deathData)
     }
   };
@@ -47,7 +44,7 @@
     imgContainer.classList.add("cardMedia")
 
     card.appendChild(imgContainer)
-    imgContainer.appendChild(img(data["URL of image"]))
+    imgContainer.appendChild(img(data["Unique ID"]))
 
     card.appendChild(p("Name: ", data["Name"]))
     card.appendChild(p("Age: ", data["Age"]))
@@ -65,11 +62,11 @@
     return elem
   }
 
-  function img(url) {
+  function img(person_id) {
 
     const placeholder = "./images/anon.png"
     const elem = document.createElement('img')
-    elem.src = url !== "" ? `https://cors-proxy.htmldriven.com/?url=${url}` : placeholder
+    elem.src = `./images/people/${person_id}.jpg`
     elem.onerror = (e) => {
       event.target.src = placeholder
     }
@@ -107,6 +104,7 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
+    justify-content: center;
   }
 </style>
 
