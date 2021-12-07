@@ -86,7 +86,7 @@ async function handleStateData() {
     .attr("text-anchor", "middle")
     .style("font-size", "20px")
     .style('font-family', "'Roboto', sans-serif")
-    .text("Innocent Deaths Caused by Police by State")
+    .text("Most Fatal Police Encounters By State")
 }
 
 function getKillingsByState(data) {

@@ -65,7 +65,7 @@ async function handleData() {
     .style("font-size", "16px")
     .style('font-family', "'Roboto', sans-serif")
     .text("Innocent Deaths Caused by Police by Location")
-    .text("Yearly Innocent Deaths Caused By U.S. Police");
+    .text("Yearly Fatal Encounters with U.S. Police");
 }
 
 function getYearlyCasualties(data) {

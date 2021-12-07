@@ -116,5 +116,5 @@ async function createZoomableMap() {
     .attr("text-anchor", "middle")
     .style("font-size", "30px")
     .style('font-family', "'Roboto', sans-serif")
-    .text("Innocent Deaths Caused by Police by Location")
+    .text("Fatal Police Encounters by Location")
 }

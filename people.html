@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>U.S. Police Fatalities Since 2000</title>
+</head>
+
+<body>
+  <div class="loading-circle"></div>
+  <p id="loading-progress"></p>
+
+  <div id="card-list">
+  </div>
+</body>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  let currentExtent = 0
+  const displayCount = 20
+  let deathData = {}
+
+  async function handleData() {
+    deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+    currentExtent = deathData.length - 1
+    createCardsInRange(currentExtent, displayCount, deathData)
+  }
+
+  function createCardsInRange(start, count, data) {
+    const cardList = document.getElementById('card-list')
+    currentExtent -= count
+
+    for (let i = start; i > start - count; i--) {
+      createCard(data[i], cardList)
+    }
+  }
+
+  window.onscroll = function (e) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      createCardsInRange(currentExtent, currentExtent > displayCount ? displayCount : currentExtent, deathData)
+    }
+  };
+
+  function createCard(data, parent) {
+    const card = document.createElement('div')
+    card.classList.add("cardBody")
+
+    const imgContainer = document.createElement('div')
+    imgContainer.classList.add("cardMedia")
+
+    card.appendChild(imgContainer)
+    imgContainer.appendChild(img(data["URL of image"]))
+
+    card.appendChild(p("Name: ", data["Name"]))
+    card.appendChild(p("Age: ", data["Age"]))
+    card.appendChild(p("Gender: ", data["Gender"]))
+    card.appendChild(p("Race:", data["Race"]))
+    card.appendChild(p("Date of Death: ", data[" Date of injury resulting in death (month/day/year)"]))
+    card.appendChild(p("Desc: ", data["Brief description"]))
+
+    parent.appendChild(card)
+  }
+
+  function p(title, ...args) {
+    const elem = document.createElement('p')
+    elem.innerHTML = title + args
+    return elem
+  }
+
+  function img(url) {
+
+    const placeholder = "./images/anon.png"
+    const elem = document.createElement('img')
+    elem.src = url !== "" ? `https://cors-proxy.htmldriven.com/?url=${url}` : placeholder
+    elem.onerror = (e) => {
+      event.target.src = placeholder
+    }
+    return elem
+  }
+
+  handleData()
+</script>
+<style>
+  .cardBody {
+    width: 400px;
+    border: 2px solid rgb(122, 122, 122);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    font-family: sans-serif;
+    line-height: 25px;
+  }
+
+  .cardMedia {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .cardMedia>img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  #card-list {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+</style>
+
+</html>

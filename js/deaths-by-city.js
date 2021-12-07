@@ -84,7 +84,7 @@ async function handleCityData() {
     .attr("text-anchor", "middle")
     .style("font-size", "20px")
     .style('font-family', "'Roboto', sans-serif")
-    .text("Top 20 U.S. Cities Ranked by Most Innocents Killed By Police")
+    .text("Top 20 U.S. Cities Ranked by Most Fatal Police Encounters")
 }
 
 function getKillingsByCity(data) {

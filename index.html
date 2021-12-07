@@ -10,21 +10,30 @@
 </head>
 
 <body>
-  <h1 class="title">Visualizing Innocent Deaths Caused by U.S. Police Since Year 2000</h1>
+  <h1 class="title">Visualizing Known Deaths Caused by U.S. Police Since Year 2000</h1>
+  <p class="subtitle">There is no reliable national data on how many
+    people are killed by U.S. police officers each year.</p>
+  <p class="subtitle">This data was crowd sourced form news reports but, while likely incomplete,
+    is the closest we have to real statistics.</p>
   <div class="vis-wrap">
     <svg id="deaths-by-location" width="600" height="600"></svg>
     <div id="person-display"></div>
 
     <div class="vis-row">
-      <svg id="deaths-by-state" width="700" height="700"></svg>
-      <svg id="deaths-by-city" width="700" height="700"></svg>
-    </div>
-    <div class="vis-row">
       <svg id="yearly-deaths" width="600" height="600"></svg>
       <svg id="deaths-by-race" width="600" height="600"></svg>
     </div>
+
+    <div class="vis-row">
+      <svg id="deaths-by-state" width="700" height="700"></svg>
+      <svg id="deaths-by-city" width="700" height="700"></svg>
+    </div>
   </div>
 
+  <div>
+    <h3 class="title">This data is more than just numbers. This data is people.</h3>
+    <p class="subtitle"><a href="./people.html">Read their stories.</a></p>
+  </div>
 
   <!-- load d3 and helper libraries -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
