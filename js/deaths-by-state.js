@@ -1,6 +1,4 @@
-async function handleStateData() {
-  const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
-
+async function handleStateData(deathData) {
   const data = getKillingsByState(deathData)
 
   const width = 700
@@ -106,5 +104,3 @@ function getKillingsByState(data) {
 
   return Object.values(killingsByState)
 }
-
-handleStateData()

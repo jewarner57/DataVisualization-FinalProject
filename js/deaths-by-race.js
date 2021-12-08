@@ -1,5 +1,4 @@
-async function handleRaceData(svgID, getData) {
-  const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+async function handleRaceData(deathData, svgID, getData) {
   const data = getData(deathData)
 
   const width = 600
@@ -98,5 +97,5 @@ function getKillingsByForceUsed(data) {
   return Object.values(killingsByForce)
 }
 
-handleRaceData("deaths-by-race", getKillingsByRace)
+// handleRaceData("deaths-by-race", getKillingsByRace)
 // handleData("svg1", getKillingsByForceUsed)

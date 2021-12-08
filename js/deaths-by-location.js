@@ -1,6 +1,4 @@
-createZoomableMap()
-
-async function createZoomableMap() {
+async function createZoomableMap(deathData) {
   const width = 1200;
   const height = 710;
 
@@ -16,8 +14,6 @@ async function createZoomableMap() {
   let detailDisplayOpen = false
 
   // start custom code 
-  const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
-
   const deathsLonExtent = d3.extent([-124.741409, -67.422941])
   const xscale = d3.scaleLinear()
     .domain(deathsLonExtent)

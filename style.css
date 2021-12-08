@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 
+html {
+  --loadingcolor: rgb(170, 221, 255);
+}
+
 svg {
   border: 1px gray;
   margin-top: 30px;
@@ -37,4 +41,36 @@ svg {
 .subtitle {
   font-family: 'Roboto', sans-serif;
   text-align: center;
+}
+
+#loading-wheel {
+  width: 100px;
+  height: 100px;
+  background: none;
+  border: 10px solid var(--loadingcolor);
+  border-radius: 50%;
+  margin: 50px auto;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: rotate;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(70deg);
+  }
+  50% {
+    transform: rotate(290deg);
+  }
+  100% {
+    transform: rotate(70deg);
+  }
+}
+
+#loading-circle {
+  width: 40px;
+  height: 40px;
+  background-color: var(--loadingcolor);
+  margin: -3px auto;
+  border-radius: 50%;
 }

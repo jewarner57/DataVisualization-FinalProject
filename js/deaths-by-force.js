@@ -1,5 +1,4 @@
-async function handleForceData() {
-  const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+async function handleForceData(deathData) {
 
   const data = getKillingsByForceUsed(deathData)
 
@@ -121,5 +120,3 @@ function getKillingsByForceUsed(data) {
   }
   return Object.values(killingsByForce)
 }
-
-handleForceData()

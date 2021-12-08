@@ -1,6 +1,4 @@
-async function handleData() {
-
-  const deathData = await d3.csv("./data/Innocent Deaths caused by Police (All time).csv")
+async function handleYearlyData(deathData) {
   const yearlyDeaths = getYearlyCasualties(deathData)
 
   const margin = 75
@@ -99,5 +97,3 @@ function getYearlyCasualties(data) {
   // the data for the most recent year (2021) is incomplete
   return yearlyDeaths.slice(0, yearlyDeaths.length - 1)
 }
-
-handleData()
