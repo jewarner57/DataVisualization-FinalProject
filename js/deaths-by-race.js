@@ -10,9 +10,9 @@ async function handleRaceData(svgID, getData) {
   const arcData = pieGen(data.map((d) => d.count))
 
   const arcGen = d3.arc() // Make an arc generator
-    .innerRadius(40) // Set the inner radius
-    .outerRadius(200) // Set the outer radius
-    .padAngle(0.001) // Set the gap between arcs
+    .innerRadius(0) // Set the inner radius
+    .outerRadius(180) // Set the outer radius
+    .padAngle(0.01) // Set the gap between arcs
 
   // Make a scale to set the color 
   const colorScale = d3.scaleSequential()
