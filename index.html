@@ -16,12 +16,16 @@
   <p class="subtitle">This data was crowd sourced form news reports but, while likely incomplete,
     is the closest we have to real statistics.</p>
   <div class="vis-wrap">
-    <svg id="deaths-by-location" width="600" height="600"></svg>
-    <div id="person-display"></div>
 
     <div class="vis-row">
+      <svg id="deaths-by-location" width="600" height="600"></svg>
       <svg id="yearly-deaths" width="600" height="600"></svg>
+      <div id="person-display"></div>
+    </div>
+
+    <div class="vis-row">
       <svg id="deaths-by-race" width="600" height="600"></svg>
+      <svg id="deaths-by-force" width="700" height="700"></svg>
     </div>
 
     <div class="vis-row">
@@ -42,6 +46,7 @@
   <!-- load visualizations -->
   <script src="./js/yearly-deaths.js" type="text/javascript"></script>
   <script src="./js/deaths-by-race.js" type="text/javascript"></script>
+  <script src="./js/deaths-by-force.js" type="text/javascript"></script>
   <script src="./js/deaths-by-state.js" type="text/javascript"></script>
   <script src="./js/deaths-by-city.js" type="text/javascript"></script>
   <script src="./js/deaths-by-location.js" type="text/javascript"></script>
